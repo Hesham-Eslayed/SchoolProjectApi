@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SchoolProject.Domain.Entities;
+﻿namespace SchoolProject.Domain.Entities;
 public class Student
 {
     [Key]
@@ -16,4 +13,6 @@ public class Student
 
     [ForeignKey(nameof(DID))]
     public virtual Department? Department { get; set; }
+
+    public ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
 }

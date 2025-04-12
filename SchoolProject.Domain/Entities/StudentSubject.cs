@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SchoolProject.Domain.Entities;
+﻿namespace SchoolProject.Domain.Entities;
 
 public class StudentSubject
 {
@@ -10,10 +7,10 @@ public class StudentSubject
     public int StudID { get; set; }
     public int SubID { get; set; }
 
-    [ForeignKey("StudID")]
+    [ForeignKey(nameof(StudID))]
     public virtual Student Student { get; set; } = null!;
 
-    [ForeignKey("SubID")]
+    [ForeignKey(nameof(SubID))]
     public virtual Subject Subject { get; set; } = null!;
 
 }

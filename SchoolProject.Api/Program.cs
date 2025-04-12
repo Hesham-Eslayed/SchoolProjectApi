@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using SchoolProject.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddDbContextPool<AppDbContext>(op =>
+op.UseSqlServer(builder.Configuration.GetConnectionString("default")
+?? throw new Exception("No conn found"))
+);
 
 var app = builder.Build();
 

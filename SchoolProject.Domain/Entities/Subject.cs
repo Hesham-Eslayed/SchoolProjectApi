@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SchoolProject.Domain.Entities;
+﻿namespace SchoolProject.Domain.Entities;
 
 public class Subject
 {
@@ -10,7 +8,7 @@ public class Subject
     [StringLength(500)]
     public required string SubjectName { get; set; }
     public DateTime Period { get; set; }
-    public virtual ICollection<StudentSubject> StudentsSubjects { get; set; } = new HashSet<StudentSubject>();
-    public virtual ICollection<DepartmentSubject> DepartmentsSubjects { get; set; } = new HashSet<DepartmentSubject>();
+    public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
+    public virtual ICollection<Department> Departments { get; set; } = new HashSet<Department>();
 }
 
