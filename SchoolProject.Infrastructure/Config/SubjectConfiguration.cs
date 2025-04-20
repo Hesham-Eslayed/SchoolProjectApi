@@ -11,7 +11,7 @@ public class SubjectConfiguration : IEntityTypeConfiguration<Subject>
 
         builder.HasMany(x => x.Departments)
            .WithMany(x => x.Subjects)
-           .UsingEntity<StudentSubject>();
+           .UsingEntity<DepartmentSubject>();
 
     }
 }

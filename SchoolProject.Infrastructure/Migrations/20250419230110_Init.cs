@@ -92,18 +92,11 @@ namespace SchoolProject.Infrastructure.Migrations
                     StudSubID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudID = table.Column<int>(type: "int", nullable: false),
-                    SubID = table.Column<int>(type: "int", nullable: false),
-                    DepartmentsDID = table.Column<int>(type: "int", nullable: false)
+                    SubID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StudentSubjects", x => x.StudSubID);
-                    table.ForeignKey(
-                        name: "FK_StudentSubjects_Departments_DepartmentsDID",
-                        column: x => x.DepartmentsDID,
-                        principalTable: "Departments",
-                        principalColumn: "DID",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StudentSubjects_Students_StudID",
                         column: x => x.StudID,
@@ -132,11 +125,6 @@ namespace SchoolProject.Infrastructure.Migrations
                 name: "IX_Students_DID",
                 table: "Students",
                 column: "DID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentSubjects_DepartmentsDID",
-                table: "StudentSubjects",
-                column: "DepartmentsDID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentSubjects_StudID",

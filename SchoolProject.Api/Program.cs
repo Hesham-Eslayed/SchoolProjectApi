@@ -1,13 +1,30 @@
-using Microsoft.EntityFrameworkCore;
-using SchoolProject.Infrastructure.Data;
+using System.Text.Json.Serialization;
+using Scalar.AspNetCore;
+using SchoolProject.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers().AddJsonOptions(op =>
+op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddControllers();
+
+
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+
+
+#region Dependency Injection
+
+builder.Services.AddInfrastructureDependencies()
+    .AddInServiceDependencies()
+    .AddCoreDependencies();
+
+#endregion
+
+
 
 builder.Services.AddDbContextPool<AppDbContext>(op =>
 op.UseSqlServer(builder.Configuration.GetConnectionString("default")
@@ -20,6 +37,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference(op =>
+    op.WithTheme(ScalarTheme.Mars)
+    .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Httpie)
+    );
+
 }
 
 app.UseHttpsRedirection();

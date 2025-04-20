@@ -12,7 +12,7 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250412061741_Init")]
+    [Migration("20250419230110_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -107,9 +107,6 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudSubID"));
 
-                    b.Property<int>("DepartmentsDID")
-                        .HasColumnType("int");
-
                     b.Property<int>("StudID")
                         .HasColumnType("int");
 
@@ -117,8 +114,6 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StudSubID");
-
-                    b.HasIndex("DepartmentsDID");
 
                     b.HasIndex("StudID");
 
@@ -178,12 +173,6 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("SchoolProject.Domain.Entities.StudentSubject", b =>
                 {
-                    b.HasOne("SchoolProject.Domain.Entities.Department", null)
-                        .WithMany()
-                        .HasForeignKey("DepartmentsDID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SchoolProject.Domain.Entities.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudID")

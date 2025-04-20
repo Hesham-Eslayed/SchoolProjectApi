@@ -104,9 +104,6 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudSubID"));
 
-                    b.Property<int>("DepartmentsDID")
-                        .HasColumnType("int");
-
                     b.Property<int>("StudID")
                         .HasColumnType("int");
 
@@ -114,8 +111,6 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StudSubID");
-
-                    b.HasIndex("DepartmentsDID");
 
                     b.HasIndex("StudID");
 
@@ -175,12 +170,6 @@ namespace SchoolProject.Infrastructure.Migrations
 
             modelBuilder.Entity("SchoolProject.Domain.Entities.StudentSubject", b =>
                 {
-                    b.HasOne("SchoolProject.Domain.Entities.Department", null)
-                        .WithMany()
-                        .HasForeignKey("DepartmentsDID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SchoolProject.Domain.Entities.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudID")
