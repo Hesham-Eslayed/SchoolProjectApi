@@ -1,4 +1,10 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using SchoolProject.Core.Bases;
+global using SchoolProject.Core.Features.Students.Queries.DTOs;
+global using SchoolProject.Core.Features.Students.Queries.Models;
+global using SchoolProject.Domain.AppMetaData;
 global using SchoolProject.Infrastructure;
 global using SchoolProject.Infrastructure.Data;
 global using SchoolProject.Service;

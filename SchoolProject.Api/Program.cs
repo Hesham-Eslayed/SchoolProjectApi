@@ -39,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference(op =>
     op.WithTheme(ScalarTheme.Mars)
-    .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Httpie)
+    .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Curl)
     );
 
 }
