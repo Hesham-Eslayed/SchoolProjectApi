@@ -1,6 +1,5 @@
-﻿
+﻿namespace SchoolProject.Core.Features.Students.Queries.Handlers;
 
-namespace SchoolProject.Core.Features.Students.Queries.Handlers;
 public class StudentQueryHandler(IStudentService studentService)
     : ResponseHandler,
     IRequestHandler<GetStudentsQuery, Response<IEnumerable<GetStudentsDto>>>,

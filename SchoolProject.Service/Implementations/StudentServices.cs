@@ -10,7 +10,8 @@ public class StudentServices(IStudentRepository repo) : IStudentService
     {
         var studentResult = await repo.GetTableNoTracking().Where(x => x.Phone.Equals(student.Phone))
             .FirstOrDefaultAsync();
-        if (studentResult is not null) return null;
+        if (studentResult is not null)
+            return null;
 
         await repo.AddAsync(student);
         await repo.SaveChangesAsync();
@@ -18,16 +19,12 @@ public class StudentServices(IStudentRepository repo) : IStudentService
         return student;
     }
 
-    public async Task<Student?> GetStudentByIdAsync(int id)
-    {
-        return await repo.GetTableNoTracking()
+    public async Task<Student?> GetStudentByIdAsync(int id) => await repo.GetTableNoTracking()
             .Include(x => x.Department)
             .Include(x => x.Subjects)
             .FirstOrDefaultAsync(x => x.StudID == id);
-    }
 
-    public async Task<IEnumerable<Student>> GetStudentsAsync()
-    {
-        return await repo.GetStudentsAsync();
-    }
+    public async Task<IEnumerable<Student>> GetStudentsAsync() => await repo.GetStudentsAsync();
+
+    public async Task<bool> IsNameExistsAsync(string name) => await repo.IsNameExistsAsync(name);
 }

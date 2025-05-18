@@ -10,12 +10,8 @@ public class StudentCommandHandler(IStudentService studentService) :
     public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
     {
         var student = request.ToStudent();
-        var result = await studentService.AddAsync(student);
+        Student? result = await studentService.AddAsync(student);
 
-        if (result is not null) return Created("");
-
-        return BadRequest<string>("Already Exists");
-
-
+        return result is not null ? Created("") : BadRequest<string>("Already Exists");
     }
 }

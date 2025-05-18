@@ -1,6 +1,9 @@
 using System.Text.Json.Serialization;
+
 using Scalar.AspNetCore;
+
 using SchoolProject.Core;
+using SchoolProject.Core.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +25,7 @@ builder.Services.AddInfrastructureDependencies()
     .AddInServiceDependencies()
     .AddCoreDependencies();
 
-#endregion
+#endregion Dependency Injection
 
 
 
@@ -32,6 +35,8 @@ op.UseSqlServer(builder.Configuration.GetConnectionString("default")
 );
 
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
