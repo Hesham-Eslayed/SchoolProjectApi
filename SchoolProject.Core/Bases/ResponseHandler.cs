@@ -10,6 +10,13 @@ public class ResponseHandler
         Message = "Deleted Successfully"
     };
 
+    public Response<T> NoContent<T>(string? message = null) => new()
+    {
+        StatusCode = System.Net.HttpStatusCode.NoContent,
+        Succeeded = true,
+        Message = message ?? "Deleted Successfully"
+    };
+
     public Response<T> Success<T>(T entity, string? message = null, object? Meta = null) => new()
     {
         Data = entity,
@@ -40,7 +47,7 @@ public class ResponseHandler
         Message = message ?? "Not Found"
     };
 
-    public Response<T> Created<T>(T entity, object? Meta = null) => new()
+    public Response<T> Created<T>(T? entity, object? Meta = null) => new()
     {
         Data = entity,
         StatusCode = System.Net.HttpStatusCode.Created,

@@ -1,4 +1,5 @@
 ﻿namespace SchoolProject.Domain.AppMetaData;
+
 public abstract partial class Router
 {
     public abstract class Student
@@ -7,5 +8,6 @@ public abstract partial class Router
         public const string List = Prefix;
         public const string GetById = Prefix + "/{id}";
         public const string Add = Prefix + "/add";
+        public const string Update = Prefix + "/update";
     }
 }

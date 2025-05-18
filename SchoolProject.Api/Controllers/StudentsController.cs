@@ -32,4 +32,11 @@ public class StudentsController : AppControllerBase
         return NewResult(result);
 
     }
+
+    [HttpPut(Router.Student.Update)]
+    public async Task<IActionResult> UpdateStudent([FromBody] EditStudentCommand studentCommand)
+    {
+        var result = await Mediator.Send(studentCommand);
+        return NewResult(result);
+    }
 }

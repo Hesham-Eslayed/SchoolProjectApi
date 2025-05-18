@@ -22,6 +22,13 @@ public class ErrorHandlerMiddleware(RequestDelegate next)
             //TODO:: cover all validation errors
             switch (error)
             {
+                case BadHttpRequestException e:
+                    // bad request error
+                    responseModel.Message = error.Message;
+                    responseModel.StatusCode = HttpStatusCode.BadRequest;
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+
                 case UnauthorizedAccessException e:
                     // custom application error
                     responseModel.Message = error.Message;

@@ -1,4 +1,5 @@
-﻿global using MediatR;
+﻿global using FluentValidation;
+global using MediatR;
 global using SchoolProject.Core.Bases;
 global using SchoolProject.Core.Features.Students.Queries.DTOs;
 global using SchoolProject.Core.Features.Students.Queries.Models;

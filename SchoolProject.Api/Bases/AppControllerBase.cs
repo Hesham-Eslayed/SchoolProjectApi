@@ -7,6 +7,7 @@ namespace SchoolProject.Api.Bases;
 public class AppControllerBase : ControllerBase
 {
     private IMediator? _mediator;
+
     protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
 
 
@@ -14,6 +15,7 @@ public class AppControllerBase : ControllerBase
     {
         HttpStatusCode.OK => new OkObjectResult(response),
         HttpStatusCode.Created => new CreatedResult(string.Empty, response),
+        HttpStatusCode.NoContent => new ObjectResult(response) { StatusCode = (int?)HttpStatusCode.NoContent },
         HttpStatusCode.Unauthorized => new UnauthorizedObjectResult(response),
         HttpStatusCode.BadRequest => new BadRequestObjectResult(response),
         HttpStatusCode.NotFound => new NotFoundObjectResult(response),

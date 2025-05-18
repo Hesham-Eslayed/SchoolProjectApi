@@ -9,23 +9,16 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
 
     #region Actions
 
-    public virtual async Task<T?> GetByIdAsync(int id)
-    {
-        return await _dbContext.Set<T>().FindAsync(id);
-    }
+    public virtual async Task<T?> GetByIdAsync(int id) => await _dbContext.Set<T>().FindAsync(id);
 
 
-    public IQueryable<T> GetTableNoTracking()
-    {
-        return _dbContext.Set<T>().AsNoTracking().AsQueryable();
-    }
+    public IQueryable<T> GetTableNoTracking() => _dbContext.Set<T>().AsNoTracking().AsQueryable();
 
 
     public virtual async Task AddRangeAsync(ICollection<T> entities)
     {
         await _dbContext.Set<T>().AddRangeAsync(entities);
         await _dbContext.SaveChangesAsync();
-
     }
 
     public virtual async Task<T?> AddAsync(T entity)
@@ -36,11 +29,11 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
         return entity;
     }
 
-    public virtual async Task UpdateAsync(T entity)
+    public virtual async Task<bool> UpdateAsync(T entity)
     {
-        _dbContext.Set<T>().Update(entity);
-        await _dbContext.SaveChangesAsync();
+        _dbContext.Entry(entity).State = EntityState.Modified;
 
+        return await _dbContext.SaveChangesAsync() > 0;
     }
 
     public virtual async Task DeleteAsync(T entity)
@@ -58,37 +51,17 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task SaveChangesAsync()
-    {
-        await _dbContext.SaveChangesAsync();
-    }
+    public async Task SaveChangesAsync() => await _dbContext.SaveChangesAsync();
 
 
 
-    public IDbContextTransaction BeginTransaction()
-    {
+    public IDbContextTransaction BeginTransaction() => _dbContext.Database.BeginTransaction();
 
+    public void Commit() => _dbContext.Database.CommitTransaction();
 
-        return _dbContext.Database.BeginTransaction();
-    }
+    public void RollBack() => _dbContext.Database.RollbackTransaction();
 
-    public void Commit()
-    {
-        _dbContext.Database.CommitTransaction();
-
-    }
-
-    public void RollBack()
-    {
-        _dbContext.Database.RollbackTransaction();
-
-    }
-
-    public IQueryable<T> GetTableAsTracking()
-    {
-        return _dbContext.Set<T>().AsQueryable();
-
-    }
+    public IQueryable<T> GetTableAsTracking() => _dbContext.Set<T>().AsQueryable();
 
     public virtual async Task UpdateRangeAsync(ICollection<T> entities)
     {

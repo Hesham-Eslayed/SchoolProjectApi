@@ -25,7 +25,7 @@ public interface IGenericRepository<T>
 
     Task AddRangeAsync(ICollection<T> entities);
 
-    Task UpdateAsync(T entity);
+    Task<bool> UpdateAsync(T entity);
 
     Task UpdateRangeAsync(ICollection<T> entities);
 

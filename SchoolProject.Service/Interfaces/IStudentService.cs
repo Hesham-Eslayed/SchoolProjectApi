@@ -8,5 +8,13 @@ public interface IStudentService
 
     Task<Student?> AddAsync(Student student);
 
-    Task<bool> IsNameExistsAsync(string name);
+    Task<bool> IsNameExistsExcludeSelfAsync(int id, string name);
+
+    Task<bool> IsNameExistAsync(string name);
+
+    Task<bool> IsPhoneExistAsync(string phone);
+
+    Task<bool> IsPhoneExistsExcludeSelfAsync(int id, string phone);
+
+    Task<bool> UpdateAsync(Student student);
 }
