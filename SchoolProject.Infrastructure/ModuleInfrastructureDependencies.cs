@@ -1,8 +1,8 @@
-﻿
-
+﻿using SchoolProject.Domain.Interfaces.Persistence;
 using SchoolProject.Infrastructure.InfarstructureBases;
 
 namespace SchoolProject.Infrastructure;
+
 public static class ModuleInfrastructureDependencies
 {
     public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)

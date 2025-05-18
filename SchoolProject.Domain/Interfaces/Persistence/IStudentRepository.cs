@@ -1,6 +1,7 @@
-﻿using SchoolProject.Infrastructure.InfarstructureBases;
+﻿using SchoolProject.Domain.Entities;
 
-namespace SchoolProject.Infrastructure.Interfaces;
+namespace SchoolProject.Domain.Interfaces.Persistence;
+
 public interface IStudentRepository : IGenericRepository<Student>
 {
     Task<IEnumerable<Student>> GetStudentsAsync();

@@ -1,5 +1,2 @@
 ﻿namespace SchoolProject.Core.Features.Students.Queries.Models;
-public class GetStudentsQuery : IRequest<Response<IEnumerable<GetStudentsDto>>>
-{
-
-}
+public record GetStudentsQuery : IRequest<Response<IEnumerable<GetStudentsDto>>>;

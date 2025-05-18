@@ -1,10 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 
+using SchoolProject.Domain.Interfaces.Persistence;
+
 namespace SchoolProject.Infrastructure.InfarstructureBases;
+
 public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<T> where T : class
 {
 
     #region Actions
+
     public virtual async Task<T?> GetByIdAsync(int id)
     {
         return await _dbContext.Set<T>().FindAsync(id);
@@ -23,7 +27,8 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
         await _dbContext.SaveChangesAsync();
 
     }
-    public virtual async Task<T> AddAsync(T entity)
+
+    public virtual async Task<T?> AddAsync(T entity)
     {
         await _dbContext.Set<T>().AddAsync(entity);
         await _dbContext.SaveChangesAsync();
@@ -43,6 +48,7 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
         _dbContext.Set<T>().Remove(entity);
         await _dbContext.SaveChangesAsync();
     }
+
     public virtual async Task DeleteRangeAsync(ICollection<T> entities)
     {
         foreach (var entity in entities)
@@ -89,5 +95,6 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
         _dbContext.Set<T>().UpdateRange(entities);
         await _dbContext.SaveChangesAsync();
     }
-    #endregion
+
+    #endregion Actions
 }

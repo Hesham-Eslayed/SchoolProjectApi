@@ -1,8 +1,8 @@
-﻿
-
+﻿using SchoolProject.Domain.Interfaces.Persistence;
 using SchoolProject.Infrastructure.InfarstructureBases;
 
 namespace SchoolProject.Infrastructure.Repositories;
+
 public class StudentRepository :
     GenericRepository<Student>,
     IStudentRepository
@@ -15,6 +15,8 @@ public class StudentRepository :
     }
 
     public async Task<IEnumerable<Student>> GetStudentsAsync()
-        => await GetTableNoTracking().Include(s => s.Department)
-        .Include(s => s.Subjects).ToListAsync();
+    {
+        return await GetTableNoTracking().Include(s => s.Department)
+            .Include(s => s.Subjects).ToListAsync();
+    }
 }

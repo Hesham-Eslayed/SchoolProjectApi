@@ -6,5 +6,6 @@ public abstract partial class Router
         private const string Prefix = root + "Students";
         public const string List = Prefix;
         public const string GetById = Prefix + "/{id}";
+        public const string Add = Prefix + "/add";
     }
 }
