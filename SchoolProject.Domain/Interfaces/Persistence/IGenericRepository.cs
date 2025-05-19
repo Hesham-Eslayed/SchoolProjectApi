@@ -29,5 +29,5 @@ public interface IGenericRepository<T>
 
     Task UpdateRangeAsync(ICollection<T> entities);
 
-    Task DeleteAsync(T entity);
+    Task<bool> DeleteAsync(T entity);
 }

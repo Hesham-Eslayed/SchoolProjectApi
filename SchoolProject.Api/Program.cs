@@ -1,17 +1,20 @@
 using System.Text.Json.Serialization;
 
 using Scalar.AspNetCore;
-
+using SchoolProject.Api.Json;
 using SchoolProject.Core;
 using SchoolProject.Core.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(op =>
-op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
-
+builder.Services.AddControllers().AddJsonOptions(op
+    =>
+{
+    op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
+}
+);
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

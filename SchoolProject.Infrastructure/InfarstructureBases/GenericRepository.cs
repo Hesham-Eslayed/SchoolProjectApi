@@ -36,10 +36,10 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
         return await _dbContext.SaveChangesAsync() > 0;
     }
 
-    public virtual async Task DeleteAsync(T entity)
+    public virtual async Task<bool> DeleteAsync(T entity)
     {
-        _dbContext.Set<T>().Remove(entity);
-        await _dbContext.SaveChangesAsync();
+        _dbContext.Entry(entity).State = EntityState.Deleted;
+        return await _dbContext.SaveChangesAsync() > 0;
     }
 
     public virtual async Task DeleteRangeAsync(ICollection<T> entities)

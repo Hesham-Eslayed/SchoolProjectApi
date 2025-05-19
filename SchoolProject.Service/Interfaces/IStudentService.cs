@@ -17,4 +17,6 @@ public interface IStudentService
     Task<bool> IsPhoneExistsExcludeSelfAsync(int id, string phone);
 
     Task<bool> UpdateAsync(Student student);
+
+    Task<bool> DeleteAsync(Student student);
 }

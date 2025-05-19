@@ -6,7 +6,8 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers;
 public class StudentCommandHandler(IStudentService studentService) :
     ResponseHandler,
     IRequestHandler<AddStudentCommand, Response<string>>,
-    IRequestHandler<EditStudentCommand, Response<Unit>>
+    IRequestHandler<EditStudentCommand, Response<Unit>>,
+    IRequestHandler<DeleteStudentCommand, Response<Unit>>
 {
     public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
     {
@@ -28,5 +29,15 @@ public class StudentCommandHandler(IStudentService studentService) :
         return await studentService.UpdateAsync(student)
             ? NoContent<Unit>("Updated Successfully")
             : throw new Exception("Something went wrong while updating student");
+    }
+
+    public async Task<Response<Unit>> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
+    {
+        var student = await studentService.GetStudentByIdAsync(request.Id)
+            ?? throw new KeyNotFoundException($"No Student with id {request.Id}");
+
+        return await studentService.DeleteAsync(student) ? NoContent<Unit>()
+            : throw new Exception("Something went wrong while deleting student");
+
     }
 }

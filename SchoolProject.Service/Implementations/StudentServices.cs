@@ -14,7 +14,7 @@ public class StudentServices(IStudentRepository repo) : IStudentService
         return student;
     }
 
-
+    public async Task<bool> DeleteAsync(Student student) => await repo.DeleteAsync(student);
 
     public async Task<Student?> GetStudentByIdAsync(int id) => await repo.GetTableNoTracking()
             .Include(x => x.Department)
