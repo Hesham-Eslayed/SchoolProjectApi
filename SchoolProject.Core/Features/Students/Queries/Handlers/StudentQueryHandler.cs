@@ -26,8 +26,8 @@ public class StudentQueryHandler(IStudentService studentService, IStringLocalize
             .Select(x => new GetStudentPaginatedListResponse()
             {
                 Address = x.Address,
-                DepartmentName = x.Department!.DNameEn,
-                Name = x.NameEn,
+                DepartmentName = x.Department!.Localize(x.Department.DNameAr, x.Department.DNameEn),
+                Name = x.Localize(x.NameAr, x.NameEn),
                 StudID = x.StudID
             })
             .ToPaginatedListAsync(request.PageNumber, request.PageSize);
