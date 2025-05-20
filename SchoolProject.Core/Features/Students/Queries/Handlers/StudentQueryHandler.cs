@@ -1,9 +1,11 @@
-﻿using SchoolProject.Core.Wrappers;
+﻿using Microsoft.Extensions.Localization;
+using SchoolProject.Core.Resources;
+using SchoolProject.Core.Wrappers;
 
 namespace SchoolProject.Core.Features.Students.Queries.Handlers;
 
-public class StudentQueryHandler(IStudentService studentService)
-    : ResponseHandler,
+public class StudentQueryHandler(IStudentService studentService, IStringLocalizer<SharedResources> stringLocalizer)
+    : ResponseHandler(stringLocalizer),
     IRequestHandler<GetStudentsQuery, Response<IEnumerable<GetStudentsDto>>>,
     IRequestHandler<GetStudentByIdQuery, Response<GetStudentDto>>,
     IRequestHandler<GetStudentPaginatedListQuery, PaginatedResult<GetStudentPaginatedListResponse>>
@@ -11,7 +13,8 @@ public class StudentQueryHandler(IStudentService studentService)
     public async Task<Response<GetStudentDto>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
     {
         var student = await studentService.GetStudentByIdWithIncludeAsync(request.Id);
-        return student is null ? NotFound<GetStudentDto>() : Success(student.ToDto(), "Found");
+        return student is null ? NotFound<GetStudentDto>()
+            : Success(student.ToDto());
     }
 
     public async Task<PaginatedResult<GetStudentPaginatedListResponse>> Handle(GetStudentPaginatedListQuery request,
@@ -23,8 +26,8 @@ public class StudentQueryHandler(IStudentService studentService)
             .Select(x => new GetStudentPaginatedListResponse()
             {
                 Address = x.Address,
-                DepartmentName = x.Department!.DName,
-                Name = x.Name,
+                DepartmentName = x.Department!.DNameEn,
+                Name = x.NameEn,
                 StudID = x.StudID
             })
             .ToPaginatedListAsync(request.PageNumber, request.PageSize);

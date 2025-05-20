@@ -12,7 +12,7 @@ public class GenericRepository<T>(AppDbContext _dbContext) : IGenericRepository<
     public virtual async Task<T?> GetByIdAsync(int id) => await _dbContext.Set<T>().FindAsync(id);
 
 
-    public IQueryable<T> GetTableNoTracking() => _dbContext.Set<T>().AsNoTracking().AsQueryable();
+    public IQueryable<T> GetTableNoTracking() => _dbContext.Set<T>().AsNoTrackingWithIdentityResolution().AsQueryable();
 
 
     public virtual async Task AddRangeAsync(ICollection<T> entities)

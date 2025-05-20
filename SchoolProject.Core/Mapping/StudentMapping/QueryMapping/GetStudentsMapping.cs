@@ -1,20 +1,19 @@
-﻿using SchoolProject.Core.Features.Students.Queries.DTOs;
+﻿using ZLinq;
 
 namespace SchoolProject.Core.Mapping.StudentMapping.QueryMapping;
+
 public static partial class StudentMapper
 {
     public static IEnumerable<GetStudentsDto> ToDtoList(this IEnumerable<Student> students)
-    {
-        return students.Select(student =>
+        => students.Select(student =>
             new GetStudentsDto
-                 (
+                    (
                 student.StudID,
-                 student.Name,
-                 student.Address,
+                student.Localize(student.NameAr, student.NameEn),
+                student.Address,
                 student.Phone,
-                student.Department!.DName,
-                [.. student.Subjects.Select(subj => subj.SubjectName)]
+                student.Department!.Localize(student.Department.DNameAr, student.Department.DNameEn),
+                [.. student.Subjects.AsValueEnumerable().Select(subj => subj.SubjectName)]
                 )
             );
-    }
 }

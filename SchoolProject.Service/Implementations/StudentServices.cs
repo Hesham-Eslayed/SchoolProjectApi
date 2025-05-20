@@ -22,9 +22,9 @@ public class StudentServices(IStudentRepository repo) : IStudentService
         var query = repo.GetTableNoTracking().Include(x => x.Department).AsQueryable();
 
         if (!string.IsNullOrEmpty(search))
-            query = query.Where(x => x.Name.Contains(search) || x.Department!.DName.Contains(search));
+            query = query.Where(x => x.NameEn.Contains(search) || x.Department!.DNameEn.Contains(search));
 
-        query = order == StudentOrderingEnum.DepartmentName ? query.OrderBy(x => x.Department!.DName)
+        query = order == StudentOrderingEnum.DepartmentName ? query.OrderBy(x => x.Department!.DNameEn)
             : query.OrderBy(order.ToString());
 
         return query;
@@ -42,10 +42,10 @@ public class StudentServices(IStudentRepository repo) : IStudentService
             .Include(s => s.Subjects).ToListAsync();
 
     public async Task<bool> IsNameExistAsync(string name) => await repo.GetTableNoTracking()
-        .AnyAsync(x => x.Name.Equals(name));
+        .AnyAsync(x => x.NameEn.Equals(name));
 
     public async Task<bool> IsNameExistsExcludeSelfAsync(int id, string name) => await repo.GetTableNoTracking()
-        .AnyAsync(x => x.Name.Equals(name) && !x.StudID.Equals(id));
+        .AnyAsync(x => x.NameEn.Equals(name) && !x.StudID.Equals(id));
 
     public async Task<bool> IsPhoneExistAsync(string phone) => await repo.GetTableNoTracking()
         .AnyAsync(x => x.Phone.Equals(phone));

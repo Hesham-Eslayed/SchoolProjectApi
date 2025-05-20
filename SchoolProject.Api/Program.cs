@@ -1,5 +1,7 @@
+using System.Globalization;
 using System.Text.Json.Serialization;
-
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 using Scalar.AspNetCore;
 using SchoolProject.Api.Json;
 using SchoolProject.Core;
@@ -32,6 +34,39 @@ builder.Services.AddInfrastructureDependencies()
 
 
 
+#region Localization
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddLocalization(opt => opt.ResourcesPath = "");
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new List<CultureInfo>
+    {
+            new("en-US"),
+            new("ar-EG")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("en-US");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+#endregion Localization
+
+#region AllowCORS
+
+string CORS = "_cors";
+builder.Services.AddCors(options => options.AddPolicy(name: CORS,
+                      policy =>
+                      {
+                          policy.AllowAnyHeader();
+                          policy.AllowAnyMethod();
+                          policy.AllowAnyOrigin();
+                      }));
+
+#endregion AllowCORS
+
 builder.Services.AddDbContextPool<AppDbContext>(op =>
 op.UseSqlServer(builder.Configuration.GetConnectionString("default")
 ?? throw new Exception("No conn found"))
@@ -40,6 +75,13 @@ op.UseSqlServer(builder.Configuration.GetConnectionString("default")
 var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
+
+#region Localization Middleware
+
+var options = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
+app.UseRequestLocalization(options.Value);
+
+#endregion Localization Middleware
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
