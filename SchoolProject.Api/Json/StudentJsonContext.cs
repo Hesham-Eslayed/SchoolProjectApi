@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using SchoolProject.Core.Features.Students.Commands.Models;
+using SchoolProject.Core.Wrappers;
 
 namespace SchoolProject.Api.Json;
 
@@ -11,6 +12,8 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(Response<GetStudentDto>))]
 [JsonSerializable(typeof(Response<Unit>))]
 [JsonSerializable(typeof(DeleteStudentCommand))]
+[JsonSerializable(typeof(GetStudentPaginatedListQuery))]
+[JsonSerializable(typeof(PaginatedResult<GetStudentPaginatedListResponse>))]
 public partial class MyJsonContext : JsonSerializerContext
 {
 }

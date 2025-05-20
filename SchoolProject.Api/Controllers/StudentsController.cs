@@ -15,6 +15,15 @@ public class StudentsController : AppControllerBase
         return NewResult(response);
     }
 
+    [HttpGet(Router.Student.Paginated)]
+    [EndpointDescription("Get students Paginated")]
+    [ProducesResponseType(200, Type = typeof(Response<IEnumerable<GetStudentsDto>>))]
+    public async Task<IActionResult> GetStudentsPaginated([FromQuery] GetStudentPaginatedListQuery query)
+    {
+        var response = await Mediator.Send(query);
+        return Ok(response);
+    }
+
     [HttpGet(Router.Student.GetById)]
     [EndpointDescription("Get the student by id")]
     [ProducesResponseType(200, Type = typeof(Response<GetStudentDto>))]

@@ -21,7 +21,7 @@ public class StudentCommandHandler(IStudentService studentService) :
 
     public async Task<Response<Unit>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
     {
-        var student = await studentService.GetStudentByIdAsync(request.Id)
+        var student = await studentService.GetStudentByIdWithIncludeAsync(request.Id)
             ?? throw new KeyNotFoundException($"No Student with id {request.Id} found");
 
         student.Update(request);

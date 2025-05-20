@@ -1,8 +1,12 @@
-﻿namespace SchoolProject.Service.Interfaces;
+﻿using SchoolProject.Domain.Enums;
+
+namespace SchoolProject.Service.Interfaces;
 
 public interface IStudentService
 {
     Task<IEnumerable<Student>> GetStudentsAsync();
+
+    Task<Student?> GetStudentByIdWithIncludeAsync(int id);
 
     Task<Student?> GetStudentByIdAsync(int id);
 
@@ -19,4 +23,6 @@ public interface IStudentService
     Task<bool> UpdateAsync(Student student);
 
     Task<bool> DeleteAsync(Student student);
+
+    IQueryable<Student> GetPaginatedQueryable(StudentOrderingEnum order, string? search);
 }

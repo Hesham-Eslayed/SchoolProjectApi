@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+﻿using System.Linq.Dynamic.Core;
+using Microsoft.EntityFrameworkCore;
+using SchoolProject.Domain.Enums;
 using SchoolProject.Domain.Interfaces.Persistence;
 
 namespace SchoolProject.Service.Implementations;
@@ -16,10 +17,25 @@ public class StudentServices(IStudentRepository repo) : IStudentService
 
     public async Task<bool> DeleteAsync(Student student) => await repo.DeleteAsync(student);
 
-    public async Task<Student?> GetStudentByIdAsync(int id) => await repo.GetTableNoTracking()
+    public IQueryable<Student> GetPaginatedQueryable(StudentOrderingEnum order, string? search)
+    {
+        var query = repo.GetTableNoTracking().Include(x => x.Department).AsQueryable();
+
+        if (!string.IsNullOrEmpty(search))
+            query = query.Where(x => x.Name.Contains(search) || x.Department!.DName.Contains(search));
+
+        query = order == StudentOrderingEnum.DepartmentName ? query.OrderBy(x => x.Department!.DName)
+            : query.OrderBy(order.ToString());
+
+        return query;
+    }
+
+    public async Task<Student?> GetStudentByIdAsync(int id) => await repo.GetByIdAsync(id);
+
+    public async Task<Student?> GetStudentByIdWithIncludeAsync(int id) => await repo.GetTableNoTracking()
             .Include(x => x.Department)
             .Include(x => x.Subjects)
-            .FirstOrDefaultAsync(x => x.StudID == id);
+            .FirstOrDefaultAsync(x => x.StudID.Equals(id));
 
     public async Task<IEnumerable<Student>> GetStudentsAsync() => await repo.GetTableNoTracking()
         .Include(s => s.Department)
