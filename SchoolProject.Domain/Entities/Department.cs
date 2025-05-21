@@ -16,7 +16,7 @@ public class Department : LocalizeEntity
 
     public int? ManagerId { get; set; }
 
-    public Instructor? Manager { get; set; }
+    public virtual Instructor? Manager { get; set; }
 
     public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
 

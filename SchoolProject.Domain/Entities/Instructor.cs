@@ -23,7 +23,7 @@ public class Instructor : LocalizeEntity
 
     public int DID { get; set; }
 
-    public Department Department { get; set; } = null!;
+    public virtual Department Department { get; set; } = null!;
 
     public Instructor? Supervisor { get; set; }
 
