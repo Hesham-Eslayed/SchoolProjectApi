@@ -7,7 +7,7 @@ public class Subject
     public int SubID { get; set; }
 
     [StringLength(500)]
-    public string SubjectName { get; set; }
+    public required string SubjectName { get; set; }
 
     public DateTime Period { get; set; }
 

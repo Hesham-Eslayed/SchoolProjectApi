@@ -9,6 +9,6 @@ public static partial class StudentMapper
         Address = student.Address!,
         NameEn = student.Name!,
         Phone = student.Phone!,
-        DID = student.DepartmentId
+        DID = student.DepartmentId!.Value
     };
 }

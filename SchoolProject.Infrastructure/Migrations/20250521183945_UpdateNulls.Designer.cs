@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250521183945_UpdateNulls")]
+    partial class UpdateNulls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,15 +172,7 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Property<int>("SubID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StudentStudID")
-                        .HasColumnType("int");
-
                     b.HasKey("StudID", "SubID");
-
-                    b.HasIndex("StudentStudID");
 
                     b.HasIndex("SubID");
 
@@ -290,10 +285,6 @@ namespace SchoolProject.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolProject.Domain.Entities.Student", null)
-                        .WithMany("StudentSubjects")
-                        .HasForeignKey("StudentStudID");
-
                     b.HasOne("SchoolProject.Domain.Entities.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubID")
@@ -315,11 +306,6 @@ namespace SchoolProject.Infrastructure.Migrations
             modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
                 {
                     b.Navigation("Instructors");
-                });
-
-            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
-                {
-                    b.Navigation("StudentSubjects");
                 });
 #pragma warning restore 612, 618
         }

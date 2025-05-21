@@ -7,7 +7,7 @@ public class Instructor : LocalizeEntity
     [Key]
     public int InsId { get; set; }
 
-    public string? NameEn { get; set; }
+    public required string NameEn { get; set; }
 
     public string? NameAr { get; set; }
 
@@ -23,7 +23,7 @@ public class Instructor : LocalizeEntity
 
     public int DID { get; set; }
 
-    public Department? Department { get; set; }
+    public Department Department { get; set; } = null!;
 
     public Instructor? Supervisor { get; set; }
 

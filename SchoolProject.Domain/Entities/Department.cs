@@ -9,14 +9,14 @@ public class Department : LocalizeEntity
     public int DID { get; set; }
 
     [StringLength(200)]
-    public string DNameEn { get; set; }
+    public required string DNameEn { get; set; }
 
     [StringLength(200)]
-    public string DNameAr { get; set; }
+    public string? DNameAr { get; set; }
 
     public int? ManagerId { get; set; }
 
-    public Instructor Manager { get; set; } = null!;
+    public Instructor? Manager { get; set; }
 
     public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
 
