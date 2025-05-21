@@ -12,12 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(op
     =>
-{
-    op.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
-}
-);
+        {
+            op.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
+        }
+        );
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -95,9 +95,9 @@ if (app.Environment.IsDevelopment())
 
 }
 
-app.UseHttpsRedirection();
-
 app.UseRouting();
+
+app.UseHttpsRedirection();
 
 app.UseOutputCache();
 
