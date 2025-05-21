@@ -12,7 +12,7 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250521012433_Init")]
+    [Migration("20250521214857_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -34,7 +34,6 @@ namespace SchoolProject.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DID"));
 
                     b.Property<string>("DNameAr")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -91,12 +90,14 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameEn")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("Salary")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("SupervisorId")
@@ -135,18 +136,16 @@ namespace SchoolProject.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudID"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("DID")
+                    b.Property<int>("DID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DepartmentDID")
+                    b.Property<int>("DepartmentDID")
                         .HasColumnType("int");
 
                     b.Property<string>("NameAr")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -156,7 +155,6 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -175,7 +173,16 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Property<int>("SubID")
                         .HasColumnType("int");
 
+                    b.Property<decimal?>("Grade")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<int?>("StudentStudID")
+                        .HasColumnType("int");
+
                     b.HasKey("StudID", "SubID");
+
+                    b.HasIndex("StudentStudID");
 
                     b.HasIndex("SubID");
 
@@ -273,7 +280,9 @@ namespace SchoolProject.Infrastructure.Migrations
                 {
                     b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DepartmentDID");
+                        .HasForeignKey("DepartmentDID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });
@@ -285,6 +294,10 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasForeignKey("StudID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SchoolProject.Domain.Entities.Student", null)
+                        .WithMany("StudentSubjects")
+                        .HasForeignKey("StudentStudID");
 
                     b.HasOne("SchoolProject.Domain.Entities.Subject", "Subject")
                         .WithMany()
@@ -307,6 +320,11 @@ namespace SchoolProject.Infrastructure.Migrations
             modelBuilder.Entity("SchoolProject.Domain.Entities.Instructor", b =>
                 {
                     b.Navigation("Instructors");
+                });
+
+            modelBuilder.Entity("SchoolProject.Domain.Entities.Student", b =>
+                {
+                    b.Navigation("StudentSubjects");
                 });
 #pragma warning restore 612, 618
         }

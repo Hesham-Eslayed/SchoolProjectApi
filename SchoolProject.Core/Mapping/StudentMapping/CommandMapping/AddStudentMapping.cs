@@ -7,7 +7,8 @@ public static partial class StudentMapper
     public static Student ToStudent(this AddStudentCommand student) => new()
     {
         Address = student.Address!,
-        NameEn = student.Name!,
+        NameEn = student.NameEn!,
+        NameAr = student.NameAr!,
         Phone = student.Phone!,
         DID = student.DepartmentId!.Value
     };

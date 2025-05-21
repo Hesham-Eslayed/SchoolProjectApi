@@ -17,7 +17,7 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
 
     private void ApplyCustomValidation()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.NameEn)
                     .MustAsync(async (key, CancellationToken)
                         => !await _studentService.IsNameExistAsync(key!))
                         .WithMessage("{PropertyValue} is already exists");
@@ -30,7 +30,11 @@ public class AddStudentValidator : AbstractValidator<AddStudentCommand>
 
     private void ApplyValidationRules()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.NameAr)
+            .NotEmpty()
+            .WithMessage("{PropertyName} must not be null or empty");
+
+        RuleFor(x => x.NameEn)
             .NotEmpty()
             .WithMessage("{PropertyName} must not be null or empty");
 

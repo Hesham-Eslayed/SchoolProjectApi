@@ -16,7 +16,7 @@ public class EditStudentValidator : AbstractValidator<EditStudentCommand>
 
     private void ApplyCustomValidation()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.NameEn)
                    .MustAsync(async (model, key, CancellationToken)
                        => !await _studentService.IsNameExistsExcludeSelfAsync(model.Id, key!))
                        .WithMessage("{PropertyValue} is already exists");

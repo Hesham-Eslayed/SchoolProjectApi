@@ -7,7 +7,7 @@ public class StudentsSubjects
 
     public int SubID { get; set; }
 
-    public int? Grade { get; set; }
+    public decimal? Grade { get; set; }
 
     public virtual Student Student { get; set; } = null!;
 

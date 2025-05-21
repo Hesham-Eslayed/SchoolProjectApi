@@ -16,5 +16,8 @@ public class InstructorConfiguration : IEntityTypeConfiguration<Instructor>
            .HasForeignKey(x => x.DID)
            .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Property(x => x.Salary)
+            .HasPrecision(18, 2);
+
     }
 }

@@ -10,9 +10,13 @@ public class BaseStudentCommandValidator : AbstractValidator<BaseStudentCommand>
 
     private void ApplyValidationRules()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.NameEn)
             .Length(3, 50)
             .WithMessage("{PropertyName}  must be between {MinLength} and {MaxLength} characters.");
+
+        RuleFor(x => x.NameAr)
+           .Length(3, 50)
+           .WithMessage("{PropertyName}  must be between {MinLength} and {MaxLength} characters.");
 
         RuleFor(x => x.Address)
             .Length(3, 50)

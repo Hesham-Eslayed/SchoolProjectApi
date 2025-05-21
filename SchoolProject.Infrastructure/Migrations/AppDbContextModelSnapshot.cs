@@ -94,6 +94,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("Salary")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("SupervisorId")
@@ -169,8 +170,9 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Property<int>("SubID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Grade")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("Grade")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<int?>("StudentStudID")
                         .HasColumnType("int");
