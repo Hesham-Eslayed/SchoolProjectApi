@@ -1,18 +1,12 @@
-﻿
+﻿namespace SchoolProject.Domain.Entities;
 
-namespace SchoolProject.Domain.Entities;
-
-public class DepartmentSubject
+public class DepartmentsSubjects
 {
-    [Key]
-    public int DeptSubID { get; set; }
     public int DID { get; set; }
+
     public int SubID { get; set; }
 
-    [ForeignKey(nameof(DID))]
     public virtual Department Department { get; set; } = null!;
 
-    [ForeignKey(nameof(SubID))]
     public virtual Subject Subject { get; set; } = null!;
 }
-

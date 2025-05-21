@@ -14,7 +14,13 @@ public class Department : LocalizeEntity
     [StringLength(200)]
     public string DNameAr { get; set; }
 
+    public int? ManagerId { get; set; }
+
+    public Instructor Manager { get; set; } = null!;
+
     public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
 
     public virtual ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
+
+    public virtual ICollection<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
 }

@@ -21,7 +21,6 @@ public class Student : LocalizeEntity
 
     public int? DID { get; set; }
 
-    [ForeignKey(nameof(DID))]
     public virtual Department? Department { get; set; }
 
     public ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();

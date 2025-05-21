@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddJsonOptions(op
     =>
 {
+    op.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
 }
@@ -22,7 +23,7 @@ builder.Services.AddControllers().AddJsonOptions(op
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-
+builder.Services.AddOutputCache();
 
 #region Dependency Injection
 
@@ -95,6 +96,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseOutputCache();
 
 app.UseAuthorization();
 

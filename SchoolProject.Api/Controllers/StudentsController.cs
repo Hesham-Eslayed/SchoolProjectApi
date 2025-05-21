@@ -1,4 +1,5 @@
-﻿using SchoolProject.Api.Bases;
+﻿using Microsoft.AspNetCore.OutputCaching;
+using SchoolProject.Api.Bases;
 using SchoolProject.Core.Features.Students.Commands.Models;
 
 namespace SchoolProject.Api.Controllers;
@@ -6,6 +7,7 @@ namespace SchoolProject.Api.Controllers;
 [ApiController]
 public class StudentsController : AppControllerBase
 {
+    [OutputCache(Duration = 60)]
     [HttpGet(Router.Student.List)]
     [EndpointDescription("Get All students")]
     [ProducesResponseType(200, Type = typeof(Response<IEnumerable<GetStudentsDto>>))]
@@ -15,6 +17,8 @@ public class StudentsController : AppControllerBase
         return NewResult(response);
     }
 
+
+    [OutputCache(Duration = 60)]
     [HttpGet(Router.Student.Paginated)]
     [EndpointDescription("Get students Paginated")]
     [ProducesResponseType(200, Type = typeof(Response<IEnumerable<GetStudentsDto>>))]
@@ -24,6 +28,8 @@ public class StudentsController : AppControllerBase
         return Ok(response);
     }
 
+
+    [OutputCache(Duration = 60)]
     [HttpGet(Router.Student.GetById)]
     [EndpointDescription("Get the student by id")]
     [ProducesResponseType(200, Type = typeof(Response<GetStudentDto>))]
@@ -32,6 +38,7 @@ public class StudentsController : AppControllerBase
         var response = await Mediator.Send(new GetStudentByIdQuery(id));
         return NewResult(response);
     }
+
 
     [HttpPost(Router.Student.Add)]
     public async Task<IActionResult> AddStudent(AddStudentCommand student)
