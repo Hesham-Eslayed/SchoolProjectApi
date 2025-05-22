@@ -2,4 +2,4 @@
 
 namespace SchoolProject.Core.Features.Departments.Queries.Models;
 
-public record GetDepartmentQuery(int Id) : IRequest<Response<DepartmentDto>>;
+public record GetDepartmentQuery(int Id, int StudentPageNumber = 1, int StudenPageSize = 10) : IRequest<Response<DepartmentDto>>;

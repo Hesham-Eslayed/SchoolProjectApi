@@ -1,11 +1,13 @@
-﻿namespace SchoolProject.Core.Features.Departments.Queries.DTOs;
+﻿using SchoolProject.Core.Wrappers;
+
+namespace SchoolProject.Core.Features.Departments.Queries.DTOs;
 
 public record DepartmentDto(
     int Id,
     string? Name,
     int MangerId,
     string? ManagerName,
-    HashSet<StudentDto> Students,
+    PaginatedResult<StudentDto> Students,
     HashSet<SubjectDto> Subjects,
     HashSet<InstructorDto> Instructors);
 

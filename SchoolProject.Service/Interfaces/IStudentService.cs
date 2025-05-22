@@ -25,4 +25,5 @@ public interface IStudentService
     Task<bool> DeleteAsync(Student student);
 
     IQueryable<Student> GetPaginatedQueryable(StudentOrderingEnum order, string? search);
+    IQueryable<Student> GetStudentsByDepartmentIdQueryable(int id);
 }

@@ -10,7 +10,6 @@ public class DepartmentService(IDepartmentRepository departmentRepository) : IDe
         return await departmentRepository.GetTableNoTracking()
             .Include(x => x.Subjects)
             .Include(x => x.Manager)
-            .Include(x => x.Students)
             .Include(x => x.Instructors)
             .FirstOrDefaultAsync(x => x.DID.Equals(id));
     }

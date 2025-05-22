@@ -7,9 +7,9 @@ public class DepartmentsController : AppControllerBase
 {
     [OutputCache(Duration = 60)]
     [HttpGet(Router.Department.GetById)]
-    public async Task<IActionResult> GetById([FromRoute] int id)
+    public async Task<IActionResult> GetById([FromQuery] GetDepartmentQuery query)
     {
-        var result = await Mediator.Send(new GetDepartmentQuery(id));
+        var result = await Mediator.Send(query);
 
         return NewResult(result);
     }

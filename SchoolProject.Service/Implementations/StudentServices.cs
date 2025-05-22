@@ -40,6 +40,12 @@ public class StudentServices(IStudentRepository repo) : IStudentService
     public async Task<IEnumerable<Student>> GetStudentsAsync() => await repo.GetTableNoTracking()
         .Include(s => s.Department)
             .Include(s => s.Subjects).ToListAsync();
+    public IQueryable<Student> GetStudentsByDepartmentIdQueryable(int id)
+    {
+        var query = repo.GetTableNoTracking().Where(x => x.DID.Equals(id)).AsQueryable();
+
+        return query;
+    }
 
     public async Task<bool> IsNameExistAsync(string name) => await repo.GetTableNoTracking()
         .AnyAsync(x => x.NameEn.Equals(name));
@@ -48,10 +54,10 @@ public class StudentServices(IStudentRepository repo) : IStudentService
         .AnyAsync(x => x.NameEn.Equals(name) && !x.StudID.Equals(id));
 
     public async Task<bool> IsPhoneExistAsync(string phone) => await repo.GetTableNoTracking()
-        .AnyAsync(x => x.Phone.Equals(phone));
+        .AnyAsync(x => x.Phone!.Equals(phone));
 
     public async Task<bool> IsPhoneExistsExcludeSelfAsync(int id, string phone) => await repo.GetTableNoTracking()
-        .AnyAsync(x => x.Phone.Equals(phone) && !x.StudID.Equals(id));
+        .AnyAsync(x => x.Phone!.Equals(phone) && !x.StudID.Equals(id));
 
     public async Task<bool> UpdateAsync(Student student) => await repo.UpdateAsync(student);
 }

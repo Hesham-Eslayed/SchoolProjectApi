@@ -9,7 +9,7 @@ public static class QueryableExtensions
     {
         pageNumber = pageNumber <= 0 ? 1 : pageNumber;
         pageSize = pageSize <= 0 ? 10 : pageSize;
-        int count = await source.AsNoTracking().CountAsync();
+        int count = await source.CountAsync();
         if (count == 0)
             return new PaginatedResult<T>([], count, pageNumber, pageSize);
 
