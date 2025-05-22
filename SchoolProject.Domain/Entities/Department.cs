@@ -5,13 +5,10 @@ namespace SchoolProject.Domain.Entities;
 public class Department : LocalizeEntity
 {
 
-    [Key]
     public int DID { get; set; }
 
-    [StringLength(200)]
     public required string DNameEn { get; set; }
 
-    [StringLength(200)]
     public string? DNameAr { get; set; }
 
     public int? ManagerId { get; set; }

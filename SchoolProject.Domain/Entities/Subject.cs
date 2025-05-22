@@ -3,10 +3,8 @@
 public class Subject
 {
 
-    [Key]
     public int SubID { get; set; }
 
-    [StringLength(500)]
     public required string SubjectName { get; set; }
 
     public DateTime Period { get; set; }

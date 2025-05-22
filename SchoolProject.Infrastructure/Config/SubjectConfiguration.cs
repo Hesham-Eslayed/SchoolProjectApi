@@ -6,24 +6,28 @@ public class SubjectConfiguration : IEntityTypeConfiguration<Subject>
 {
     public void Configure(EntityTypeBuilder<Subject> builder)
     {
+        builder.HasKey(x => x.SubID);
+
+        #region Relations
+
         builder.HasMany(x => x.Students)
-            .WithMany(x => x.Subjects)
-            .UsingEntity<StudentsSubjects>(
-            j =>
-            {
-                j.HasKey(x => new { x.StudID, x.SubID });
+          .WithMany(x => x.Subjects)
+          .UsingEntity<StudentsSubjects>(
+          j =>
+          {
+              j.HasKey(x => new { x.StudID, x.SubID });
 
-                j.ToTable($"{nameof(Subject.Students)}{nameof(Student.Subjects)}");
+              j.ToTable($"{nameof(Subject.Students)}{nameof(Student.Subjects)}");
 
-                j.HasOne(ss => ss.Student)
-                 .WithMany()
-                 .HasForeignKey(ss => ss.StudID);
+              j.HasOne(ss => ss.Student)
+               .WithMany()
+               .HasForeignKey(ss => ss.StudID);
 
-                j.HasOne(ss => ss.Subject)
-                 .WithMany()
-                 .HasForeignKey(ss => ss.SubID);
-            }
-            );
+              j.HasOne(ss => ss.Subject)
+               .WithMany()
+               .HasForeignKey(ss => ss.SubID);
+          }
+          );
 
 
         builder.HasMany(x => x.Departments)
@@ -70,5 +74,14 @@ public class SubjectConfiguration : IEntityTypeConfiguration<Subject>
            }
            );
 
+        #endregion Relations
+
+
+        #region Properties
+
+        builder.Property(x => x.SubjectName)
+        .HasMaxLength(100);
+
+        #endregion Properties
     }
 }

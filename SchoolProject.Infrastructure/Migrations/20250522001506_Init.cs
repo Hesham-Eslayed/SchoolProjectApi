@@ -16,7 +16,7 @@ public partial class Init : Migration
             {
                 SubID = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                SubjectName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                SubjectName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                 Period = table.Column<DateTime>(type: "datetime2", nullable: false)
             },
             constraints: table => table.PrimaryKey("PK_Subjects", x => x.SubID));
@@ -27,8 +27,8 @@ public partial class Init : Migration
             {
                 DID = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                DNameEn = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                DNameAr = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                DNameEn = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                DNameAr = table.Column<string>(type: "NVarChar(100)", nullable: true),
                 ManagerId = table.Column<int>(type: "int", nullable: true)
             },
             constraints: table => table.PrimaryKey("PK_Departments", x => x.DID));
@@ -63,13 +63,13 @@ public partial class Init : Migration
             {
                 InsId = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                NameEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                NameAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                NameEn = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                NameAr = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                Position = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                 SupervisorId = table.Column<int>(type: "int", nullable: true),
                 Salary = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
-                Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Image = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                 DID = table.Column<int>(type: "int", nullable: false)
             },
             constraints: table =>
@@ -95,10 +95,10 @@ public partial class Init : Migration
             {
                 StudID = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                NameEn = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                NameAr = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                Address = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                Phone = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                NameEn = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                NameAr = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                 DID = table.Column<int>(type: "int", nullable: false),
                 DepartmentDID = table.Column<int>(type: "int", nullable: false)
             },

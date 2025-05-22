@@ -4,7 +4,6 @@ namespace SchoolProject.Domain.Entities;
 
 public class Instructor : LocalizeEntity
 {
-    [Key]
     public int InsId { get; set; }
 
     public required string NameEn { get; set; }
