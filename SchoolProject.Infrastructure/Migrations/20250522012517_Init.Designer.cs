@@ -11,7 +11,7 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250522003533_Init")]
+    [Migration("20250522012517_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -203,7 +203,11 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Property<int>("Period")
                         .HasColumnType("int");
 
-                    b.Property<string>("SubjectName")
+                    b.Property<string>("SubjectNameAr")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SubjectNameEn")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");

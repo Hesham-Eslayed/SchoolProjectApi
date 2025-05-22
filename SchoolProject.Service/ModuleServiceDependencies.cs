@@ -1,11 +1,11 @@
-﻿
+﻿namespace SchoolProject.Service;
 
-namespace SchoolProject.Service;
 public static class ModuleServiceDependencies
 {
     public static IServiceCollection AddInServiceDependencies(this IServiceCollection services)
     {
-        services.AddTransient<IStudentService, StudentServices>();
+        services.AddScoped<IStudentService, StudentServices>();
+        services.AddScoped<IDepartmentService, DepartmentService>();
         return services;
     }
 }

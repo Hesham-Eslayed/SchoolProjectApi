@@ -2,7 +2,7 @@
 
 public class LocalizeEntity
 {
-    public string Localize(string textAr, string textEn)
+    public string? Localize(string? textAr, string textEn)
     {
         var culture = Thread.CurrentThread.CurrentCulture;
 

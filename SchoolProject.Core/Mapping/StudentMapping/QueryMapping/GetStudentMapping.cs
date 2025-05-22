@@ -12,6 +12,6 @@ public static partial class StudentMapper
             student.Address,
             student.Phone,
             student.Department!.Localize(student.Department.DNameAr, student.Department.DNameEn),
-            [.. student.Subjects.AsValueEnumerable().Select(subj => subj.SubjectName)]);
+            [.. student.Subjects.AsValueEnumerable().Select(subj => subj.SubjectNameEn)]);
     }
 }

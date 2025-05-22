@@ -18,7 +18,7 @@ public class Student : LocalizeEntity
 
     public virtual Department Department { get; set; } = null!;
 
-    public ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
+    public IEnumerable<Subject> Subjects { get; set; } = new HashSet<Subject>();
 
-    public ICollection<StudentsSubjects> StudentSubjects { get; set; } = new HashSet<StudentsSubjects>();
+    public IEnumerable<StudentsSubjects> StudentSubjects { get; set; } = new HashSet<StudentsSubjects>();
 }

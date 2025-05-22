@@ -26,7 +26,7 @@ public class Instructor : LocalizeEntity
 
     public Instructor? Supervisor { get; set; }
 
-    public virtual ICollection<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
+    public virtual IEnumerable<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
 
-    public virtual ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
+    public virtual IEnumerable<Subject> Subjects { get; set; } = new HashSet<Subject>();
 }

@@ -33,7 +33,7 @@ public class StudentsController : AppControllerBase
     [HttpGet(Router.Student.GetById)]
     [EndpointDescription("Get the student by id")]
     [ProducesResponseType(200, Type = typeof(Response<GetStudentDto>))]
-    public async Task<IActionResult> GetStudent(int id)
+    public async Task<IActionResult> GetStudent([FromRoute] int id)
     {
         var response = await Mediator.Send(new GetStudentByIdQuery(id));
         return NewResult(response);

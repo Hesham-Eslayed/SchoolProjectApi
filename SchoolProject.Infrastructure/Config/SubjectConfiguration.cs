@@ -79,7 +79,10 @@ public class SubjectConfiguration : IEntityTypeConfiguration<Subject>
 
         #region Properties
 
-        builder.Property(x => x.SubjectName)
+        builder.Property(x => x.SubjectNameEn)
+        .HasMaxLength(100);
+
+        builder.Property(x => x.SubjectNameAr)
         .HasMaxLength(100);
 
         #endregion Properties

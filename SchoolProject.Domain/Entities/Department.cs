@@ -15,9 +15,9 @@ public class Department : LocalizeEntity
 
     public virtual Instructor? Manager { get; set; }
 
-    public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
+    public virtual IEnumerable<Student> Students { get; set; } = new HashSet<Student>();
 
-    public virtual ICollection<Subject> Subjects { get; set; } = new HashSet<Subject>();
+    public virtual IEnumerable<Subject> Subjects { get; set; } = new HashSet<Subject>();
 
-    public virtual ICollection<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
+    public virtual IEnumerable<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
 }

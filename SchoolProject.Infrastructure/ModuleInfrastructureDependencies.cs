@@ -7,8 +7,11 @@ public static class ModuleInfrastructureDependencies
 {
     public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
     {
-        services.AddTransient<IStudentRepository, StudentRepository>();
-        services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<IInstructorRepository, InstructorRepository>();
+        services.AddScoped<ISubjectRepository, SubjectRepository>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         return services;
     }
 }
