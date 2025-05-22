@@ -7,7 +7,7 @@ public class Subject
 
     public required string SubjectName { get; set; }
 
-    public DateTime Period { get; set; }
+    public int Period { get; set; }
 
     public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
 

@@ -17,7 +17,7 @@ public partial class Init : Migration
                 SubID = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
                 SubjectName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                Period = table.Column<DateTime>(type: "datetime2", nullable: false)
+                Period = table.Column<int>(type: "int", nullable: false)
             },
             constraints: table => table.PrimaryKey("PK_Subjects", x => x.SubID));
 
