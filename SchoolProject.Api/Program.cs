@@ -57,7 +57,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 #region AllowCORS
 
-string CORS = "_cors";
+const string CORS = "_cors";
+
 builder.Services.AddCors(options => options.AddPolicy(name: CORS,
                       policy =>
                       {
@@ -95,11 +96,15 @@ if (app.Environment.IsDevelopment())
 
 }
 
-app.UseRouting();
-
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseCors(CORS);
+
 app.UseOutputCache();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

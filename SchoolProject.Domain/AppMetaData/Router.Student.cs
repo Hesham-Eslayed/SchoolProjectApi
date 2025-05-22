@@ -4,7 +4,7 @@ public abstract partial class Router
 {
     public abstract class Student
     {
-        private const string Prefix = root + "Students";
+        private const string Prefix = root + Vergion + "Students";
         public const string List = Prefix;
         public const string GetById = Prefix + singleRout;
         public const string Add = Prefix + "/add";
