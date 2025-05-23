@@ -2,7 +2,7 @@
 
 namespace SchoolProject.Domain.Entities;
 
-public class Student : LocalizeEntity
+public class Student : ILocalizeEntity
 {
     public int StudID { get; set; }
 

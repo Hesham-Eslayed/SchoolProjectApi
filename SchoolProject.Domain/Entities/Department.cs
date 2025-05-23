@@ -2,7 +2,7 @@
 
 namespace SchoolProject.Domain.Entities;
 
-public class Department : LocalizeEntity
+public class Department : ILocalizeEntity
 {
 
     public int DID { get; set; }
@@ -20,4 +20,6 @@ public class Department : LocalizeEntity
     public virtual IEnumerable<Subject> Subjects { get; set; } = new HashSet<Subject>();
 
     public virtual IEnumerable<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
+
+
 }

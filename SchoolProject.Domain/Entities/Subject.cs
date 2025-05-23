@@ -2,7 +2,7 @@
 
 namespace SchoolProject.Domain.Entities;
 
-public class Subject : LocalizeEntity
+public class Subject : ILocalizeEntity
 {
 
     public int SubID { get; set; }

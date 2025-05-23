@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Resources;
 using SchoolProject.Core.Wrappers;
+using SchoolProject.Domain.Common;
 
 namespace SchoolProject.Core.Features.Students.Queries.Handlers;
 
@@ -26,8 +27,8 @@ public class StudentQueryHandler(IStudentService studentService, IStringLocalize
             .Select(x => new GetStudentPaginatedListResponse()
             {
                 Address = x.Address,
-                DepartmentName = x.Department!.Localize(x.Department.DNameAr, x.Department.DNameEn),
-                Name = x.Localize(x.NameAr, x.NameEn),
+                DepartmentName = ((ILocalizeEntity)x.Department!).Localize(x.Department.DNameAr, x.Department.DNameEn),
+                Name = ((ILocalizeEntity)x).Localize(x.NameAr, x.NameEn),
                 StudID = x.StudID
             })
             .ToPaginatedListAsync(request.PageNumber, request.PageSize);

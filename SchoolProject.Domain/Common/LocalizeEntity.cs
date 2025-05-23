@@ -1,8 +1,8 @@
 ﻿namespace SchoolProject.Domain.Common;
 
-public class LocalizeEntity
+public interface ILocalizeEntity
 {
-    public string? Localize(string? textAr, string textEn)
+    string? Localize(string? textAr, string textEn)
     {
         var culture = Thread.CurrentThread.CurrentCulture;
 

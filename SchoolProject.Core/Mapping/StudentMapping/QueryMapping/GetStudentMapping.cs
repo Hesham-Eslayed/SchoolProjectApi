@@ -1,4 +1,5 @@
-﻿using ZLinq;
+﻿using SchoolProject.Domain.Common;
+using ZLinq;
 
 namespace SchoolProject.Core.Mapping.StudentMapping.QueryMapping;
 
@@ -8,10 +9,10 @@ public static partial class StudentMapper
     {
         return new GetStudentDto(
             student.StudID,
-            student.Localize(student.NameAr, student.NameEn),
+            ((ILocalizeEntity)student).Localize(student.NameAr, student.NameEn),
             student.Address,
             student.Phone,
-            student.Department!.Localize(student.Department.DNameAr, student.Department.DNameEn),
+            ((ILocalizeEntity)student.Department!).Localize(student.Department.DNameAr, student.Department.DNameEn),
             [.. student.Subjects.AsValueEnumerable().Select(subj => subj.SubjectNameEn)]);
     }
 }
