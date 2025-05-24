@@ -3,6 +3,7 @@ using SchoolProject.Core.Features.Departments.Queries.DTOs;
 using SchoolProject.Core.Features.Departments.Queries.Models;
 using SchoolProject.Core.Features.Students.Commands.Models;
 using SchoolProject.Core.Wrappers;
+using SchoolProject.Domain.Entities;
 
 namespace SchoolProject.Api.Json;
 
@@ -14,6 +15,7 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(EditStudentCommand))]
 [JsonSerializable(typeof(Response<IEnumerable<GetStudentsDto>>))]
 [JsonSerializable(typeof(Response<GetStudentDto>))]
+[JsonSerializable(typeof(Response<Student>))]
 [JsonSerializable(typeof(Response<Unit>))]
 [JsonSerializable(typeof(DeleteStudentCommand))]
 [JsonSerializable(typeof(GetStudentPaginatedListQuery))]
