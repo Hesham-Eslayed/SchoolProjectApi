@@ -2,7 +2,7 @@
 
 public interface ILocalizeEntity
 {
-    string? Localize(string? textAr, string textEn)
+    string? Localize(string? textAr, string? textEn)
     {
         var culture = Thread.CurrentThread.CurrentCulture;
 

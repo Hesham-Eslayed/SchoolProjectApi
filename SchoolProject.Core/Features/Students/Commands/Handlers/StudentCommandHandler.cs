@@ -7,18 +7,20 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers;
 
 public class StudentCommandHandler(IStudentService studentService, IStringLocalizer<SharedResources> stringLocalizer) :
     ResponseHandler(stringLocalizer),
-    IRequestHandler<AddStudentCommand, Response<Student>>,
+    IRequestHandler<AddStudentCommand, Response<GetStudentDto>>,
     IRequestHandler<EditStudentCommand, Response<Unit>>,
     IRequestHandler<DeleteStudentCommand, Response<Unit>>
 {
-    public async Task<Response<Student>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
+    public async Task<Response<GetStudentDto>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
     {
         var student = request.ToStudent();
 
-        var result = await studentService.AddAsync(student)
+        var added = await studentService.AddAsync(student)
             ?? throw new Exception("Phone number already exists");
 
-        return Created(result);
+        var result = await studentService.GetStudentByIdWithIncludeAsync(added.StudID);
+
+        return Created(result!.ToDto());
     }
 
     public async Task<Response<Unit>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
