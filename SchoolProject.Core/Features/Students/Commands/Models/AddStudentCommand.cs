@@ -2,6 +2,6 @@
 
 namespace SchoolProject.Core.Features.Students.Commands.Models;
 
-public class AddStudentCommand : BaseStudentCommand, IRequest<Response<string>>
+public class AddStudentCommand : BaseStudentCommand, IRequest<Response<int>>
 {
 }

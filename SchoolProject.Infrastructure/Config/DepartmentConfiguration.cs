@@ -15,6 +15,11 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
             .HasForeignKey<Department>(x => x.ManagerId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasMany(x => x.Students)
+           .WithOne(x => x.Department)
+           .HasForeignKey(x => x.DID)
+           .OnDelete(DeleteBehavior.Restrict);
+
         #region Properties
 
         builder.Property(x => x.DNameEn)

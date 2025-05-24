@@ -142,9 +142,6 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.Property<int>("DID")
                         .HasColumnType("int");
 
-                    b.Property<int>("DepartmentDID")
-                        .HasColumnType("int");
-
                     b.Property<string>("NameAr")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -160,7 +157,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.HasKey("StudID");
 
-                    b.HasIndex("DepartmentDID");
+                    b.HasIndex("DID");
 
                     b.ToTable("Students");
                 });
@@ -284,8 +281,8 @@ namespace SchoolProject.Infrastructure.Migrations
                 {
                     b.HasOne("SchoolProject.Domain.Entities.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DepartmentDID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("DID")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Department");

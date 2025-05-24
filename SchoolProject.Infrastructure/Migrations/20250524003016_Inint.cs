@@ -5,7 +5,7 @@
 namespace SchoolProject.Infrastructure.Migrations;
 
 /// <inheritdoc />
-public partial class Init : Migration
+public partial class Inint : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -100,18 +100,17 @@ public partial class Init : Migration
                 NameAr = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                 Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                 Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                DID = table.Column<int>(type: "int", nullable: false),
-                DepartmentDID = table.Column<int>(type: "int", nullable: false)
+                DID = table.Column<int>(type: "int", nullable: false)
             },
             constraints: table =>
             {
                 table.PrimaryKey("PK_Students", x => x.StudID);
                 table.ForeignKey(
-                    name: "FK_Students_Departments_DepartmentDID",
-                    column: x => x.DepartmentDID,
+                    name: "FK_Students_Departments_DID",
+                    column: x => x.DID,
                     principalTable: "Departments",
                     principalColumn: "DID",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
             });
 
         migrationBuilder.CreateTable(
@@ -197,9 +196,9 @@ public partial class Init : Migration
             column: "SubID");
 
         migrationBuilder.CreateIndex(
-            name: "IX_Students_DepartmentDID",
+            name: "IX_Students_DID",
             table: "Students",
-            column: "DepartmentDID");
+            column: "DID");
 
         migrationBuilder.CreateIndex(
             name: "IX_StudentsSubjects_StudentStudID",
