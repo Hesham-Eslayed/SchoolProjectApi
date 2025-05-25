@@ -1,6 +1,4 @@
 ﻿using System.Reflection;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolProject.Core.Behaviors;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
@@ -23,17 +21,21 @@ public static class ModuleCoreDependencies
         services.AddFluentValidationAutoValidation(op
             => op.OverrideDefaultResultFactoryWith<CustomValidationResultFactory>());
 
-        services.Configure<ApiBehaviorOptions>(options =>
-               options.InvalidModelStateResponseFactory = context =>
-               {
-                   var errors = context.ModelState
-                        .Where(x => x.Value!.Errors.Count > 0)
-                        .SelectMany(err => err.Value!.Errors
-                                 .Select(r => new ValidationFailure(err.Key, r.ErrorMessage)));
+        #region Override the default validation response
+        //services.Configure<ApiBehaviorOptions>(options =>
+        //       options.InvalidModelStateResponseFactory = context =>
+        //       {
+        //           var errors = context.ModelState
+        //                .Where(x => x.Value!.Errors.Count > 0)
+        //                .SelectMany(err => err.Value!.Errors
+        //                         .Select(r => new ValidationFailure(err.Key, r.ErrorMessage)));
 
-                   throw new ValidationException(errors);
-               }
-               );
+        //           throw new ValidationException(errors);
+        //       }
+        //       ); 
+        #endregion Override the default validation response
+
+
 
         return services;
     }

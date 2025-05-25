@@ -20,17 +20,14 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(DeleteStudentCommand))]
 [JsonSerializable(typeof(GetStudentPaginatedListQuery))]
 [JsonSerializable(typeof(PaginatedResult<GetStudentPaginatedListResponse>))]
-
+[JsonSerializable(typeof(ValidationProblemDetails))]
 #endregion Student
-
-
 
 #region Department
 [JsonSerializable(typeof(GetDepartmentQuery))]
 [JsonSerializable(typeof(DepartmentDto))]
 [JsonSerializable(typeof(Response<DepartmentDto>))]
-#endregion
-
+#endregion Department
 
 public partial class MyJsonContext : JsonSerializerContext
 {
