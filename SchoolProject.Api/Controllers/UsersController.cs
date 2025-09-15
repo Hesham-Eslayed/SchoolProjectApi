@@ -22,4 +22,5 @@ public class UsersController : AppControllerBase
 	[HttpPut(Router.User.Update)]
 	public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command, CancellationToken cancellationToken)
 		=> NewResult(await Mediator.Send(command, cancellationToken));
+
 }
