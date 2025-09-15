@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using Scalar.AspNetCore;
 using SchoolProject.Api.Json;
@@ -10,15 +9,16 @@ using SchoolProject.Core.MiddleWare;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(op
-    =>
-        {
-            op.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-            op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
-        }
-        );
-
+builder.Services.AddControllers()
+	.AddJsonOptions(op
+			=>
+		{
+			op.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+			op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+			op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
+			op.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+		}
+	);
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -28,12 +28,10 @@ builder.Services.AddOutputCache();
 #region Dependency Injection
 
 builder.Services.AddInfrastructureDependencies()
-    .AddInServiceDependencies()
-    .AddCoreDependencies();
+	.AddInServiceDependencies()
+	.AddCoreDependencies();
 
 #endregion Dependency Injection
-
-
 
 #region Localization
 
@@ -42,15 +40,15 @@ builder.Services.AddLocalization(opt => opt.ResourcesPath = "");
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    var supportedCultures = new List<CultureInfo>
-    {
-            new("en-US"),
-            new("ar-EG")
-    };
+	var supportedCultures = new List<CultureInfo>
+	{
+		new("en-US"),
+		new("ar-EG")
+	};
 
-    options.DefaultRequestCulture = new RequestCulture("en-US");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
+	options.DefaultRequestCulture = new("en-US");
+	options.SupportedCultures = supportedCultures;
+	options.SupportedUICultures = supportedCultures;
 });
 
 #endregion Localization
@@ -59,19 +57,18 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 const string CORS = "_cors";
 
-builder.Services.AddCors(options => options.AddPolicy(name: CORS,
-                      policy =>
-                      {
-                          policy.AllowAnyHeader();
-                          policy.AllowAnyMethod();
-                          policy.AllowAnyOrigin();
-                      }));
+builder.Services.AddCors(options => options.AddPolicy(CORS,
+	policy =>
+	{
+		policy.AllowAnyHeader();
+		policy.AllowAnyMethod();
+		policy.AllowAnyOrigin();
+	}));
 
 #endregion AllowCORS
 
 builder.Services.AddDbContextPool<AppDbContext>(op =>
-op.UseSqlServer(builder.Configuration.GetConnectionString("default")
-?? throw new Exception("No conn found"))
+	op.UseSqlServer(builder.Configuration.GetConnectionString("default") ?? throw new("No conn found"))
 );
 
 var app = builder.Build();
@@ -88,11 +85,12 @@ app.UseRequestLocalization(options.Value);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference(op =>
-    op.WithTheme(ScalarTheme.Mars)
-    .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Curl)
-    );
+	app.MapOpenApi();
+
+	app.MapScalarApiReference(op =>
+		op.WithTheme(ScalarTheme.Mars)
+			.WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Curl)
+	);
 
 }
 

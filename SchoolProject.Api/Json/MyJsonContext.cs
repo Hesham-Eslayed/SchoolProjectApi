@@ -3,6 +3,8 @@ using SchoolProject.Core.Features.Departments.Queries.DTOs;
 using SchoolProject.Core.Features.Departments.Queries.Models;
 using SchoolProject.Core.Features.Students.Commands.Models;
 using SchoolProject.Core.Features.Users.Commands.Models;
+using SchoolProject.Core.Features.Users.Queries.Models;
+using SchoolProject.Core.Features.Users.Queries.Responses;
 using SchoolProject.Core.Wrappers;
 using SchoolProject.Domain.Entities;
 
@@ -36,6 +38,8 @@ namespace SchoolProject.Api.Json;
 #region Users
 
 [JsonSerializable(typeof(AddUserCommand))]
+[JsonSerializable(typeof(GetUserListQuery))]
+[JsonSerializable(typeof(PaginatedResult<GetUserResponse>))]
 [JsonSerializable(typeof(Response<string>))]
 
 #endregion
