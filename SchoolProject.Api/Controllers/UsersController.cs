@@ -12,7 +12,7 @@ public class UsersController : AppControllerBase
 		=> Ok(await Mediator.Send(new GetUserListQuery(pageNumber, pageSize), cancellationToken));
 
 	[HttpPost(Router.User.Add)]
-	public async Task<IActionResult> Create(AddUserCommand command, CancellationToken cancellationToken)
+	public async Task<IActionResult> Create([FromBody] AddUserCommand command, CancellationToken cancellationToken)
 		=> NewResult(await Mediator.Send(command, cancellationToken));
 
 	[HttpGet(Router.User.GetById)]
