@@ -9,7 +9,7 @@ namespace SchoolProject.Core.Features.Users.Commands.Handlers;
 
 public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalizer, UserManager<User> userManager)
 	: ResponseHandler(stringLocalizer), IRequestHandler<AddUserCommand, Response<string>>,
-	  IRequestHandler<UpdateUserCommand, Response<string>>
+	  IRequestHandler<UpdateUserCommand, Response<string>>, IRequestHandler<DeleteUserCommand, Response<Unit>>
 {
 
 	public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
@@ -27,6 +27,18 @@ public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalize
 		var createdUser = await userManager.CreateAsync(identityUser, request.Password);
 
 		return !createdUser.Succeeded ? BadRequest<string>(createdUser.Errors.FirstOrDefault()!.Description) : Created<string>(null);
+
+	}
+
+	public async Task<Response<Unit>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+	{
+		var user = await userManager.FindByIdAsync(request.Id.ToString());
+
+		if (user is null) return NotFound<Unit>();
+
+		var deleted = await userManager.DeleteAsync(user);
+
+		return !deleted.Succeeded ? BadRequest<Unit>(deleted.Errors.FirstOrDefault()?.Description) : Deleted<Unit>();
 
 	}
 
