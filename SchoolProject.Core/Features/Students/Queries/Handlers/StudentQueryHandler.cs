@@ -11,6 +11,7 @@ public class StudentQueryHandler(IStudentService studentService, IStringLocalize
 	  IRequestHandler<GetStudentByIdQuery, Response<GetStudentDto>>,
 	  IRequestHandler<GetStudentPaginatedListQuery, PaginatedResult<GetStudentPaginatedListResponse>>
 {
+
 	public async Task<Response<GetStudentDto>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
 	{
 		var student = await studentService.GetStudentByIdWithIncludeAsync(request.Id);

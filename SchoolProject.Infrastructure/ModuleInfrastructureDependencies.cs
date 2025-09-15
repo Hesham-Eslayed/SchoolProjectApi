@@ -14,11 +14,12 @@ public static class ModuleInfrastructureDependencies
 		services.AddScoped<IInstructorRepository, InstructorRepository>();
 		services.AddScoped<ISubjectRepository, SubjectRepository>();
 		services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+		services.AddIdentity();
 
 		return services;
 	}
 
-	public static IServiceCollection AddIdentity(this IServiceCollection services)
+	private static IServiceCollection AddIdentity(this IServiceCollection services)
 	{
 
 		services.AddIdentityCore<User>(op =>
@@ -27,7 +28,8 @@ public static class ModuleInfrastructureDependencies
 				op.Password.RequiredUniqueChars = 0;
 				op.User.RequireUniqueEmail = true;
 				op.Password.RequireNonAlphanumeric = false;
-
+				op.Password.RequireLowercase = false;
+				op.Password.RequireUppercase = false;
 
 			})
 			.AddRoles<IdentityRole<int>>()

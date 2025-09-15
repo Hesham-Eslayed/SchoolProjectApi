@@ -1,7 +1,7 @@
 ﻿using SchoolProject.Domain.Common;
 using ZLinq;
 
-namespace SchoolProject.Core.Mapping.StudentMapping.QueryMapping;
+namespace SchoolProject.Core.Mapping.StudentMapping;
 
 public static partial class StudentMapper
 {

@@ -2,6 +2,7 @@
 using SchoolProject.Core.Features.Departments.Queries.DTOs;
 using SchoolProject.Core.Features.Departments.Queries.Models;
 using SchoolProject.Core.Features.Students.Commands.Models;
+using SchoolProject.Core.Features.Users.Commands.Models;
 using SchoolProject.Core.Wrappers;
 using SchoolProject.Domain.Entities;
 
@@ -21,13 +22,23 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(GetStudentPaginatedListQuery))]
 [JsonSerializable(typeof(PaginatedResult<GetStudentPaginatedListResponse>))]
 [JsonSerializable(typeof(ValidationProblemDetails))]
+
 #endregion Student
 
 #region Department
+
 [JsonSerializable(typeof(GetDepartmentQuery))]
 [JsonSerializable(typeof(DepartmentDto))]
 [JsonSerializable(typeof(Response<DepartmentDto>))]
+
 #endregion Department
+
+#region Users
+
+[JsonSerializable(typeof(AddUserCommand))]
+[JsonSerializable(typeof(Response<string>))]
+
+#endregion
 
 public partial class MyJsonContext : JsonSerializerContext
 {
