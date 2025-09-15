@@ -6,11 +6,16 @@ namespace SchoolProject.Api.Controllers;
 
 public class UsersController : AppControllerBase
 {
+
+	[HttpGet(Router.User.Paginated)]
+	public async Task<IActionResult> GetUsersPaginated(int pageNumber, int pageSize, CancellationToken cancellationToken)
+		=> Ok(await Mediator.Send(new GetUserListQuery(pageNumber, pageSize), cancellationToken));
+
 	[HttpPost(Router.User.Add)]
 	public async Task<IActionResult> Create(AddUserCommand command, CancellationToken cancellationToken)
 		=> NewResult(await Mediator.Send(command, cancellationToken));
 
-	[HttpPost(Router.User.GetById)]
-	public async Task<IActionResult> GetById(int Id, CancellationToken cancellationToken)
-		=> NewResult(await Mediator.Send(new GetUserByIdQuery(Id), cancellationToken));
+	[HttpGet(Router.User.GetById)]
+	public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
+		=> NewResult(await Mediator.Send(new GetUserByIdQuery(id), cancellationToken));
 }
