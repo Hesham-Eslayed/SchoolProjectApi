@@ -20,5 +20,5 @@ public class Student : LocalizeEntity
 
 	public IEnumerable<Subject> Subjects { get; set; } = new HashSet<Subject>();
 
-	public IEnumerable<StudentsSubjects> StudentSubjects { get; set; } = new HashSet<StudentsSubjects>();
+	public IEnumerable<StudentSubjects> StudentSubjects { get; set; } = new HashSet<StudentSubjects>();
 }
