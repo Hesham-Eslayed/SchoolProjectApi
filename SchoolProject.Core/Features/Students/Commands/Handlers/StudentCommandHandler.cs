@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Students.Commands.Models;
-using SchoolProject.Core.Mapping.StudentMapping;
 using SchoolProject.Core.Mapping.StudentMapping.CommandMapping;
 using SchoolProject.Core.Resources;
 
