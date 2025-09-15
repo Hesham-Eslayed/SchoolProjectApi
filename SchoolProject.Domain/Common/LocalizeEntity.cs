@@ -1,14 +1,12 @@
 ﻿namespace SchoolProject.Domain.Common;
 
-public interface ILocalizeEntity
+public abstract class LocalizeEntity
 {
-	string? Localize(string? textAr, string? textEn)
+	public static string? Localize(string? textAr, string? textEn)
 	{
 		var culture = Thread.CurrentThread.CurrentCulture;
 
-		if (culture.TwoLetterISOLanguageName.Equals("ar", StringComparison.OrdinalIgnoreCase))
-			return textAr;
+		return culture.TwoLetterISOLanguageName.Equals("ar", StringComparison.OrdinalIgnoreCase) ? textAr : textEn;
 
-		return textEn;
 	}
 }

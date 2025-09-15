@@ -9,37 +9,37 @@ namespace SchoolProject.Core;
 
 public static class ModuleCoreDependencies
 {
-    public static IServiceCollection AddCoreDependencies(this IServiceCollection services)
-    {
-        // mediator configuration
-        services.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+	public static IServiceCollection AddCoreDependencies(this IServiceCollection services)
+	{
+		// mediator configuration
+		services.AddMediatR(cfg =>
+			cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-        // Get Validators
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+		// Get Validators
+		services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+		//services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-        services.AddFluentValidationAutoValidation(op
-            => op.OverrideDefaultResultFactoryWith<CustomValidationResultFactory>());
+		services.AddFluentValidationAutoValidation(op
+			=> op.OverrideDefaultResultFactoryWith<CustomValidationResultFactory>());
 
-        #region Override the default validation response for data annotation
-        services.Configure<ApiBehaviorOptions>(options =>
-               options.InvalidModelStateResponseFactory = context =>
-               {
+		#region Override the default validation response for data annotation
+		services.Configure<ApiBehaviorOptions>(options =>
+			   options.InvalidModelStateResponseFactory = context =>
+			   {
 
-                   var errors = context.ModelState
-                        .Where(x => x.Value!.Errors.Count > 0)
-                        .SelectMany(err => err.Value!.Errors
-                                 .Select(r => new ValidationFailure(err.Key, r.ErrorMessage)));
+				   var errors = context.ModelState
+						.Where(x => x.Value!.Errors.Count > 0)
+						.SelectMany(err => err.Value!.Errors
+								 .Select(r => new ValidationFailure(err.Key, r.ErrorMessage)));
 
-                   throw new ValidationException(errors);
-               }
-               );
-        #endregion Override the default validation response
+				   throw new ValidationException(errors);
+			   }
+			   );
+		#endregion Override the default validation response
 
 
 
-        return services;
-    }
+		return services;
+	}
 }
