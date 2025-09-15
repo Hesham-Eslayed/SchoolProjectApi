@@ -43,6 +43,7 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(Response<string>))]
 [JsonSerializable(typeof(Response<GetUserByIdResponse>))]
 [JsonSerializable(typeof(Response<GetUserByIdQuery>))]
+[JsonSerializable(typeof(Response<UpdateUserCommand>))]
 
 #endregion
 

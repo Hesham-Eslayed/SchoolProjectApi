@@ -13,4 +13,15 @@ public static partial class UserMapper
 		Country = command.Country,
 		PhoneNumber = command.PhoneNumber
 	};
+
+	public static User UpdateFromUpdateCommand(this User user, UpdateUserCommand command)
+	{
+		user.Email = command.Email;
+		user.UserName = command.UserName;
+		user.Address = command.Address;
+		user.Country = command.Country;
+		user.PhoneNumber = command.PhoneNumber;
+
+		return user;
+	}
 }

@@ -18,4 +18,8 @@ public class UsersController : AppControllerBase
 	[HttpGet(Router.User.GetById)]
 	public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
 		=> NewResult(await Mediator.Send(new GetUserByIdQuery(id), cancellationToken));
+
+	[HttpPut(Router.User.Update)]
+	public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command, CancellationToken cancellationToken)
+		=> NewResult(await Mediator.Send(command, cancellationToken));
 }

@@ -8,7 +8,8 @@ using SchoolProject.Domain.Identity;
 namespace SchoolProject.Core.Features.Users.Commands.Handlers;
 
 public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalizer, UserManager<User> userManager)
-	: ResponseHandler(stringLocalizer), IRequestHandler<AddUserCommand, Response<string>>
+	: ResponseHandler(stringLocalizer), IRequestHandler<AddUserCommand, Response<string>>,
+	  IRequestHandler<UpdateUserCommand, Response<string>>
 {
 
 	public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
@@ -25,8 +26,21 @@ public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalize
 
 		var createdUser = await userManager.CreateAsync(identityUser, request.Password);
 
-		if (!createdUser.Succeeded) return BadRequest<string>(createdUser.Errors.FirstOrDefault()!.Description);
+		return !createdUser.Succeeded ? BadRequest<string>(createdUser.Errors.FirstOrDefault()!.Description) : Created<string>(null);
 
-		return Created<string>(null);
+	}
+
+	public async Task<Response<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+	{
+		var user = await userManager.FindByIdAsync(request.Id.ToString());
+
+		if (user is null) return NotFound<string>();
+
+		user.UpdateFromUpdateCommand(request);
+
+		var result = await userManager.UpdateAsync(user);
+
+		return !result.Succeeded ? BadRequest<string>(result.Errors.FirstOrDefault()?.Description) : Success<string>(null);
+
 	}
 }
