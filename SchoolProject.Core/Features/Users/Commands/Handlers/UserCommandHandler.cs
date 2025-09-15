@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using SchoolProject.Core.Features.Users.Commands.Models;
 using SchoolProject.Core.Mapping.UserMapping;
@@ -47,6 +48,15 @@ public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalize
 		var user = await userManager.FindByIdAsync(request.Id.ToString());
 
 		if (user is null) return NotFound<string>();
+
+		bool userNameExists =
+			await userManager.Users.AnyAsync(x => x.UserName == request.UserName && x.Id != request.Id, cancellationToken);
+
+		if (userNameExists) return BadRequest<string>("UserName is invalid");
+
+		bool emailExists = await userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != request.Id, cancellationToken);
+
+		if (emailExists) return BadRequest<string>("Email is invalid");
 
 		user.UpdateFromUpdateCommand(request);
 
