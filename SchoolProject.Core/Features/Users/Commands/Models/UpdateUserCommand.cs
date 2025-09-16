@@ -7,4 +7,4 @@ public record UpdateUserCommand(
 	string? Address,
 	string? Country,
 	string? PhoneNumber)
-	: IRequest<Response<string>>;
+	: IRequest<Response<Unit>>;

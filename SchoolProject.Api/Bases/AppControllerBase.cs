@@ -6,21 +6,20 @@ namespace SchoolProject.Api.Bases;
 [Produces("application/json")]
 public class AppControllerBase : ControllerBase
 {
-    private IMediator? _mediator;
+	private IMediator? _mediator;
 
-    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
+	protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
 
-
-    public ObjectResult NewResult<T>(Response<T> response) => response.StatusCode switch
-    {
-        HttpStatusCode.OK => new OkObjectResult(response),
-        HttpStatusCode.Created => new CreatedResult(string.Empty, response),
-        HttpStatusCode.NoContent => new ObjectResult(response) { StatusCode = (int?)HttpStatusCode.NoContent },
-        HttpStatusCode.Unauthorized => new UnauthorizedObjectResult(response),
-        HttpStatusCode.BadRequest => new BadRequestObjectResult(response),
-        HttpStatusCode.NotFound => new NotFoundObjectResult(response),
-        HttpStatusCode.Accepted => new AcceptedResult(string.Empty, response),
-        HttpStatusCode.UnprocessableEntity => new UnprocessableEntityObjectResult(response),
-        _ => new BadRequestObjectResult(response),
-    };
+	public IActionResult NewResult<T>(Response<T> response) => response.StatusCode switch
+	{
+		HttpStatusCode.OK => new OkObjectResult(response),
+		HttpStatusCode.Created => new CreatedResult(string.Empty, response),
+		HttpStatusCode.NoContent => new NoContentResult(),
+		HttpStatusCode.Unauthorized => new UnauthorizedObjectResult(response),
+		HttpStatusCode.BadRequest => new BadRequestObjectResult(response),
+		HttpStatusCode.NotFound => new NotFoundObjectResult(response),
+		HttpStatusCode.Accepted => new AcceptedResult(string.Empty, response),
+		HttpStatusCode.UnprocessableEntity => new UnprocessableEntityObjectResult(response),
+		_ => new BadRequestObjectResult(response)
+	};
 }

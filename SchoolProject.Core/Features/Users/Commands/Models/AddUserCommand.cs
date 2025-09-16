@@ -8,4 +8,4 @@ public record AddUserCommand(
 	string Password,
 	string ConfirmPassword,
 	string? PhoneNumber)
-	: IRequest<Response<string>>;
+	: IRequest<Response<Unit>>;

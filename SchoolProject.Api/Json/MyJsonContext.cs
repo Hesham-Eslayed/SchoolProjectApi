@@ -40,10 +40,11 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(AddUserCommand))]
 [JsonSerializable(typeof(GetUserListQuery))]
 [JsonSerializable(typeof(PaginatedResult<GetUserResponse>))]
-[JsonSerializable(typeof(Response<string>))]
 [JsonSerializable(typeof(Response<GetUserByIdResponse>))]
-[JsonSerializable(typeof(Response<GetUserByIdQuery>))]
-[JsonSerializable(typeof(Response<UpdateUserCommand>))]
+[JsonSerializable(typeof(GetUserByIdQuery))]
+[JsonSerializable(typeof(UpdateUserCommand))]
+[JsonSerializable(typeof(DeleteUserCommand))]
+[JsonSerializable(typeof(ChangeUserPasswordCommand))]
 
 #endregion
 

@@ -17,5 +17,7 @@ public abstract partial class Router
 		public const string Delete = Prefix + singleRout;
 
 		public const string Paginated = Prefix + "/Paginated";
+
+		public const string ChangePassword = Prefix + "/change-password";
 	}
 }

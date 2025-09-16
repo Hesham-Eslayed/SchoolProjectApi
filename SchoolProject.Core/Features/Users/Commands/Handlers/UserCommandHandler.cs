@@ -9,25 +9,45 @@ using SchoolProject.Domain.Identity;
 namespace SchoolProject.Core.Features.Users.Commands.Handlers;
 
 public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalizer, UserManager<User> userManager)
-	: ResponseHandler(stringLocalizer), IRequestHandler<AddUserCommand, Response<string>>,
-	  IRequestHandler<UpdateUserCommand, Response<string>>, IRequestHandler<DeleteUserCommand, Response<Unit>>
+	: ResponseHandler(stringLocalizer), IRequestHandler<AddUserCommand, Response<Unit>>,
+	  IRequestHandler<UpdateUserCommand, Response<Unit>>, IRequestHandler<DeleteUserCommand, Response<Unit>>,
+	  IRequestHandler<ChangeUserPasswordCommand, Response<Unit>>
 {
 
-	public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
+	public async Task<Response<Unit>> Handle(AddUserCommand request, CancellationToken cancellationToken)
 	{
 		var email = await userManager.FindByEmailAsync(request.Email);
 
-		if (email is not null) return BadRequest<string>("Email is invalid");
+		if (email is not null) return BadRequest<Unit>("Email is invalid");
 
 		var userName = await userManager.FindByNameAsync(request.UserName);
 
-		if (userName is not null) return BadRequest<string>("UserName is invalid");
+		if (userName is not null) return BadRequest<Unit>("UserName is invalid");
 
 		var identityUser = request.TOModel();
 
 		var createdUser = await userManager.CreateAsync(identityUser, request.Password);
 
-		return !createdUser.Succeeded ? BadRequest<string>(createdUser.Errors.FirstOrDefault()!.Description) : Created<string>(null);
+		return !createdUser.Succeeded ? BadRequest<Unit>(createdUser.Errors.FirstOrDefault()!.Description) : Created(Unit.Value);
+
+	}
+
+	public async Task<Response<Unit>> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
+	{
+		var user = await userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
+		if (user is null) return BadRequest<Unit>("User Id or Password is invalid");
+
+		bool validPassword = await userManager.CheckPasswordAsync(user, request.CurrentPassword);
+
+		if (!validPassword) return BadRequest<Unit>("User Id or Password is invalid");
+
+		var updatedResult = await userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+
+		if (!updatedResult.Succeeded)
+			return BadRequest<Unit>(updatedResult.Errors.FirstOrDefault()?.Description);
+
+		return NoContent<Unit>();
 
 	}
 
@@ -43,26 +63,26 @@ public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalize
 
 	}
 
-	public async Task<Response<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+	public async Task<Response<Unit>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
 	{
 		var user = await userManager.FindByIdAsync(request.Id.ToString());
 
-		if (user is null) return NotFound<string>();
+		if (user is null) return NotFound<Unit>();
 
 		bool userNameExists =
 			await userManager.Users.AnyAsync(x => x.UserName == request.UserName && x.Id != request.Id, cancellationToken);
 
-		if (userNameExists) return BadRequest<string>("UserName is invalid");
+		if (userNameExists) return BadRequest<Unit>("UserName is invalid");
 
 		bool emailExists = await userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != request.Id, cancellationToken);
 
-		if (emailExists) return BadRequest<string>("Email is invalid");
+		if (emailExists) return BadRequest<Unit>("Email is invalid");
 
 		user.UpdateFromUpdateCommand(request);
 
 		var result = await userManager.UpdateAsync(user);
 
-		return !result.Succeeded ? BadRequest<string>(result.Errors.FirstOrDefault()?.Description) : Success<string>(null);
+		return !result.Succeeded ? BadRequest<Unit>(result.Errors.FirstOrDefault()?.Description) : NoContent<Unit>();
 
 	}
 }

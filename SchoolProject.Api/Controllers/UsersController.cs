@@ -26,4 +26,8 @@ public class UsersController : AppControllerBase
 	[HttpDelete(Router.User.Delete)]
 	public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
 		=> NewResult(await Mediator.Send(new DeleteUserCommand(id), cancellationToken));
+
+	[HttpPut(Router.User.ChangePassword)]
+	public async Task<IActionResult> ChangePassword([FromBody] ChangeUserPasswordCommand command, CancellationToken cancellationToken)
+		=> NewResult(await Mediator.Send(command, cancellationToken));
 }
