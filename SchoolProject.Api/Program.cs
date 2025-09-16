@@ -2,9 +2,9 @@ using System.Globalization;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Scalar.AspNetCore;
-using SchoolProject.Api.Json;
 using SchoolProject.Core;
 using SchoolProject.Core.MiddleWare;
+using SchoolProject.Domain.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +15,12 @@ builder.Services.AddControllers()
 		{
 			op.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 			op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-			op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
+			// op.JsonSerializerOptions.TypeInfoResolver = MyJsonContext.Default;
 			op.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 		}
 	);
+
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.Name));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -27,7 +29,7 @@ builder.Services.AddOutputCache();
 
 #region Dependency Injection
 
-builder.Services.AddInfrastructureDependencies()
+builder.Services.AddInfrastructureDependencies(builder.Configuration)
 	.AddInServiceDependencies()
 	.AddCoreDependencies();
 

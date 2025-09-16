@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using SchoolProject.Core.Features.Authentications.Commands.Models;
 using SchoolProject.Core.Features.Departments.Queries.DTOs;
 using SchoolProject.Core.Features.Departments.Queries.Models;
 using SchoolProject.Core.Features.Students.Commands.Models;
@@ -20,6 +21,7 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(Response<GetStudentDto>))]
 [JsonSerializable(typeof(Response<Student>))]
 [JsonSerializable(typeof(Response<Unit>))]
+[JsonSerializable(typeof(Response<string>))]
 [JsonSerializable(typeof(DeleteStudentCommand))]
 [JsonSerializable(typeof(GetStudentPaginatedListQuery))]
 [JsonSerializable(typeof(PaginatedResult<GetStudentPaginatedListResponse>))]
@@ -45,6 +47,12 @@ namespace SchoolProject.Api.Json;
 [JsonSerializable(typeof(UpdateUserCommand))]
 [JsonSerializable(typeof(DeleteUserCommand))]
 [JsonSerializable(typeof(ChangeUserPasswordCommand))]
+
+#endregion
+
+#region Authentication
+
+[JsonSerializable(typeof(SignInCommand))]
 
 #endregion
 

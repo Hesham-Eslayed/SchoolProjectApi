@@ -36,6 +36,5 @@ public class AddUserValidator : AbstractValidator<AddUserCommand>
 			.Matches(x => x.Password)
 			.WithMessage("{PropertyName} must not match password");
 
-		;
 	}
 }
