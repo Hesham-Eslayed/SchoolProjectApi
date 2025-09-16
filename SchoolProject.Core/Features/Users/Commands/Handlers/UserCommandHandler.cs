@@ -44,10 +44,7 @@ public class UserCommandHandler(IStringLocalizer<SharedResources> stringLocalize
 
 		var updatedResult = await userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
 
-		if (!updatedResult.Succeeded)
-			return BadRequest<Unit>(updatedResult.Errors.FirstOrDefault()?.Description);
-
-		return NoContent<Unit>();
+		return !updatedResult.Succeeded ? BadRequest<Unit>(updatedResult.Errors.FirstOrDefault()?.Description) : NoContent<Unit>();
 
 	}
 
